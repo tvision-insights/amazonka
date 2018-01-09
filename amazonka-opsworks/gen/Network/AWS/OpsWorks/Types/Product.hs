@@ -2853,8 +2853,8 @@ instance NFData ReportedOS where
 -- /See:/ 'sslConfiguration' smart constructor.
 data SSLConfiguration = SSLConfiguration'
   { _scChain       :: !(Maybe Text)
-  , _scCertificate :: !Text
-  , _scPrivateKey  :: !Text
+  , _scCertificate :: !(Maybe Text)
+  , _scPrivateKey  :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -2874,8 +2874,8 @@ sslConfiguration
 sslConfiguration pCertificate_ pPrivateKey_ =
   SSLConfiguration'
   { _scChain = Nothing
-  , _scCertificate = pCertificate_
-  , _scPrivateKey = pPrivateKey_
+  , _scCertificate = Just pCertificate_
+  , _scPrivateKey = Just pPrivateKey_
   }
 
 
@@ -2884,11 +2884,11 @@ scChain :: Lens' SSLConfiguration (Maybe Text)
 scChain = lens _scChain (\ s a -> s{_scChain = a});
 
 -- | The contents of the certificate's domain.crt file.
-scCertificate :: Lens' SSLConfiguration Text
+scCertificate :: Lens' SSLConfiguration (Maybe Text)
 scCertificate = lens _scCertificate (\ s a -> s{_scCertificate = a});
 
 -- | The private key; the contents of the certificate's domain.kex file.
-scPrivateKey :: Lens' SSLConfiguration Text
+scPrivateKey :: Lens' SSLConfiguration (Maybe Text)
 scPrivateKey = lens _scPrivateKey (\ s a -> s{_scPrivateKey = a});
 
 instance FromJSON SSLConfiguration where
